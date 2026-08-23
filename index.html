@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MËD — нейрофотоателье</title>
+  <meta name="description" content="MËD — кадры, которые едят глазами." />
+  <meta name="theme-color" content="#140E0A" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #140e0a;
+      --paper: #f3e6d4;
+      --ink: #140e0a;
+      --fg: #f3e6d4;
+      --muted: #b9a894;
+      --acid: #e8b84a;
+      --copper: #c9894b;
+      --line: #2c241c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: Syne, system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ::selection { background: var(--acid); color: var(--ink); }
+    .grain {
+      pointer-events: none;
+      position: fixed; inset: -20%;
+      z-index: 80; opacity: .045; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.85'/%3E%3C/svg%3E");
+    }
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 40;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 20px 32px; pointer-events: none;
+    }
+    header a, header span { pointer-events: auto; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; }
+    nav { display: flex; gap: 32px; }
+    nav a { color: var(--muted); }
+    nav a:hover { color: var(--acid); }
+    .hero, .look { position: relative; min-height: 100dvh; overflow: hidden; }
+    .hero img, .look img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+    .scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgb(20 14 10 / .35), rgb(20 14 10 / .12) 40%, rgb(20 14 10 / .82));
+    }
+    .hero-inner, .look-inner {
+      position: relative; min-height: 100dvh; display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 40px 32px 48px;
+    }
+    .kicker { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--acid); }
+    h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic; font-weight: 500;
+      font-size: min(16vw, 11rem); line-height: .78; letter-spacing: -.04em;
+      text-shadow: 0 2px 28px rgb(20 14 10 / .7);
+    }
+    .hero-row { margin-top: 28px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+    .lede { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 2.4rem); line-height: 1.05; max-width: 28rem; }
+    .cta {
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 12px 28px; background: var(--acid); color: var(--ink);
+      font-size: 12px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
+    }
+    .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; }
+    .track { display: flex; width: max-content; animation: mq 42s linear infinite; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .38em; text-transform: uppercase; color: var(--copper); }
+    @keyframes mq { to { transform: translateX(-50%); } }
+    .pad { padding: 80px 32px; }
+    h2 { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; font-size: clamp(2.4rem, 7vw, 6rem); line-height: .9; }
+    .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 40px; }
+    .mono { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+    .grid button { position: relative; overflow: hidden; display: block; width: 100%; text-align: left; }
+    .grid img { width: 100%; height: min(72vh, 640px); object-fit: cover; display: block; transition: transform .7s ease; }
+    .grid button:hover img { transform: scale(1.04); }
+    .cap {
+      position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 12px 16px; background: linear-gradient(to top, rgb(20 14 10 / .8), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .grid button:hover .cap { opacity: 1; }
+    .cap b { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; font-size: 1.25rem; }
+    .cap span { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--acid); }
+    .c5 { grid-column: span 5; }
+    .c3 { grid-column: span 3; }
+    .c6 { grid-column: span 6; }
+    .c7 { grid-column: span 7; }
+    .look { min-height: 88dvh; }
+    .look-inner { min-height: 88dvh; }
+    .look .scrim { background: linear-gradient(to top, var(--bg), rgb(20 14 10 / .25), transparent); }
+    .paper { background: var(--paper); color: var(--ink); }
+    .notes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 56px; }
+    .notes article { border-top: 1px solid rgb(20 14 10 / .15); padding-top: 20px; }
+    .notes h3 { margin: 12px 0; font-size: 1.1rem; }
+    .notes p { font-size: .9rem; line-height: 1.5; opacity: .7; }
+    .contact { min-height: 70dvh; display: flex; flex-direction: column; justify-content: space-between; }
+    footer { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--line); padding: 24px 32px; }
+    footer .big { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(3rem, 14vw, 9rem); line-height: .8; }
+    .lb {
+      position: fixed; inset: 0; z-index: 100; background: rgb(20 14 10 / .92);
+      display: none; align-items: center; justify-content: center; padding: 32px;
+    }
+    .lb.on { display: flex; }
+    .lb img { max-height: 78vh; max-width: 100%; }
+    .lb .x { position: absolute; top: 20px; right: 20px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--acid); }
+    @media (max-width: 800px) {
+      header { padding: 20px 16px; }
+      nav { display: none; }
+      .hero-inner, .look-inner, .pad, footer { padding-left: 16px; padding-right: 16px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .c5, .c3, .c6, .c7 { grid-column: span 1; }
+      .c5:nth-child(1), .c6 { grid-column: span 2; }
+      .grid img { height: auto; aspect-ratio: 3/4; }
+      .notes { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .cap { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <header>
+    <a href="#top">Mëd</a>
+    <nav>
+      <a href="#gallery">Кадры</a>
+      <a href="#taste">Вкус</a>
+      <a href="#contact">Заказ</a>
+    </nav>
+    <span style="color:var(--muted)">Neuro · 26</span>
+  </header>
+
+  <section class="hero" id="top">
+    <img src="work/silk.jpg" alt="" />
+    <div class="scrim"></div>
+    <div class="hero-inner">
+      <p class="kicker">Нейрофотоателье</p>
+      <h1>Mëd</h1>
+      <div class="hero-row">
+        <p class="lede">Кадры, которые<br>едят глазами.</p>
+        <a class="cta" href="#gallery">Смотреть плёнку</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee">
+    <div class="track">
+      <span>НЕЙРОФОТО  —  СТУДИЯ  —  КАДР КАК ДЕСЕРТ  —  СВЕТ КАК СОУС  —  ДОРОГО  —  НЕЙРОФОТО  —  СТУДИЯ  —  КАДР КАК ДЕСЕРТ  —  СВЕТ КАК СОУС  —  ДОРОГО  —  </span>
+      <span>НЕЙРОФОТО  —  СТУДИЯ  —  КАДР КАК ДЕСЕРТ  —  СВЕТ КАК СОУС  —  ДОРОГО  —  НЕЙРОФОТО  —  СТУДИЯ  —  КАДР КАК ДЕСЕРТ  —  СВЕТ КАК СОУС  —  ДОРОГО  —  </span>
+    </div>
+  </div>
+
+  <section class="pad" id="gallery">
+    <div class="head">
+      <h2>Плёнка</h2>
+      <span class="mono">/ 01 — семь кадров</span>
+    </div>
+    <div class="grid">
+      <button class="c5" data-src="work/silk.jpg" data-t="Шёлк" data-m="Midi · 85mm"><img src="work/silk.jpg" alt="Шёлк"><span class="cap"><b>Шёлк</b><span>Midi · 85mm</span></span></button>
+      <button class="c3" data-src="work/coat.jpg" data-t="Шерсть" data-m="Rim light · 50mm"><img src="work/coat.jpg" alt="Шерсть"><span class="cap"><b>Шерсть</b><span>Rim light</span></span></button>
+      <button class="c3" data-src="work/profile.jpg" data-t="Профиль" data-m="Атлас · золото"><img src="work/profile.jpg" alt="Профиль"><span class="cap"><b>Профиль</b><span>Атлас</span></span></button>
+      <button class="c6" data-src="work/honey.jpg" data-t="Мёд" data-m="Натюрморт"><img src="work/honey.jpg" alt="Мёд"><span class="cap"><b>Мёд</b><span>Walnut</span></span></button>
+      <button class="c6" data-src="work/hands.jpg" data-t="Цепь" data-m="Silk · gold"><img src="work/hands.jpg" alt="Цепь"><span class="cap"><b>Цепь</b><span>Gold</span></span></button>
+      <button class="c5" data-src="work/chair.jpg" data-t="Кресло" data-m="Wool midi"><img src="work/chair.jpg" alt="Кресло"><span class="cap"><b>Кресло</b><span>Cognac</span></span></button>
+      <button class="c7" data-src="work/walk.jpg" data-t="Кашемир" data-m="Lookbook"><img src="work/walk.jpg" alt="Кашемир"><span class="cap"><b>Кашемир</b><span>Lookbook</span></span></button>
+    </div>
+  </section>
+
+  <section class="look">
+    <img src="work/walk.jpg" alt="" />
+    <div class="scrim"></div>
+    <div class="look-inner">
+      <p class="kicker">Lookbook 26</p>
+      <p class="lede" style="max-width:36rem;font-size:clamp(2rem,5vw,4.2rem)">Одежда как свет.<br>Свет как десерт.</p>
+    </div>
+  </section>
+
+  <section class="paper pad" id="taste">
+    <p class="mono" style="color:rgb(20 14 10 / .45)">/ 02 — вкус</p>
+    <h2 style="margin-top:24px">Дорого — это когда<br>кадр хочется съесть.</h2>
+    <div class="notes">
+      <article><p class="mono">01</p><h3>Свет как соус</h3><p>Мёд, коньяк, один луч. Без фиолетового неона из шаблонов.</p></article>
+      <article><p class="mono">02</p><h3>Ткань как десерт</h3><p>Текстура крупно. Хочется провести пальцем по кадру.</p></article>
+      <article><p class="mono">03</p><h3>Тишина дороже</h3><p>Пустое поле. Никаких трёх карточек «наши услуги».</p></article>
+      <article><p class="mono">04</p><h3>Характер, не фильтр</h3><p>Взгляд, ткань, помада. Не сток и не шаблон.</p></article>
+    </div>
+  </section>
+
+  <section class="pad contact" id="contact">
+    <p class="kicker">/ 03 — заказ</p>
+    <div>
+      <h2>Пришлите лицо.<br>Вернём аппетит.</h2>
+      <p style="margin:32px 0;max-width:28rem;color:var(--muted)">Нейрофото под студию: свет, ткань, характер. Не «ещё одна генерация».</p>
+      <a class="cta" href="mailto:hello@med.atelier">hello@med.atelier</a>
+    </div>
+  </section>
+
+  <footer>
+    <p class="big">Mëd</p>
+    <p class="mono">© 2026 · веб гнида</p>
+  </footer>
+
+  <div class="lb" id="lb">
+    <button class="x" type="button" id="close">Закрыть</button>
+    <figure>
+      <img id="lbimg" alt="" />
+      <figcaption style="margin-top:16px;display:flex;justify-content:space-between;gap:16px">
+        <b id="lbt" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;font-weight:500"></b>
+        <span id="lbm" class="mono"></span>
+      </figcaption>
+    </figure>
+  </div>
+  <script>
+    const lb = document.getElementById("lb");
+    document.querySelectorAll(".grid button").forEach((b) => {
+      b.onclick = () => {
+        document.getElementById("lbimg").src = b.dataset.src;
+        document.getElementById("lbt").textContent = b.dataset.t;
+        document.getElementById("lbm").textContent = b.dataset.m;
+        lb.classList.add("on");
+      };
+    });
+    const close = () => lb.classList.remove("on");
+    document.getElementById("close").onclick = close;
+    lb.onclick = (e) => { if (e.target === lb) close(); };
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  </script>
+</body>
+</html>
